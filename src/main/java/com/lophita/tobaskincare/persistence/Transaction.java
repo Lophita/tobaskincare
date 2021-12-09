@@ -28,8 +28,7 @@ public class Transaction {
     @CreatedDate
     private LocalDateTime createdTime;
 
-    public Transaction(String id, LocalDateTime trxTime, LocalDateTime expeditionTime, BigDecimal price, String notes, SellingType type, String identifier, String name, String username, LocalDateTime createdTime) {
-        this.id = id;
+    public Transaction(LocalDateTime trxTime, LocalDateTime expeditionTime, BigDecimal price, String notes, SellingType type, String identifier, String name, String username, LocalDateTime createdTime) {
         this.trxTime = trxTime;
         this.expeditionTime = expeditionTime;
         this.price = price;

@@ -25,8 +25,7 @@ public class Stock {
     @CreatedDate
     private LocalDateTime createdTime;
 
-    public Stock(String id, String identifier, String name, LocalDateTime stockUpdated, BigDecimal price, String notes, String urlNotes, String username, LocalDateTime createdTime) {
-        this.id = id;
+    public Stock(String identifier, String name, LocalDateTime stockUpdated, BigDecimal price, String notes, String urlNotes, String username, LocalDateTime createdTime) {
         this.identifier = identifier;
         this.name = name;
         this.stockUpdated = stockUpdated;

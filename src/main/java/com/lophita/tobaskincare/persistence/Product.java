@@ -14,8 +14,7 @@ public class Product {
     private String notes;
     private String type;
 
-    public Product(String id, String name, String identifier, String notes, String type) {
-        this.id = id;
+    public Product(String name, String identifier, String notes, String type) {
         this.name = name;
         this.identifier = identifier;
         this.notes = notes;
