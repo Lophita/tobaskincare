@@ -20,21 +20,21 @@ public class TobaskincareApplication {
         SpringApplication.run(TobaskincareApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner runner(ProductRepository productRepository, TransactionRepository transactionRepository, StockRepository stockRepository) {
-        return args -> {
-            System.out.println("RUNNING");
-            Product product = new Product("Sunscreen Wardah", "WD-001", "spf30", Type.SKINCARE.name());
-            productRepository.insert(product);
-
-            Transaction transaction = new Transaction(LocalDateTime.now(),LocalDateTime.now(), new BigDecimal("27000"),
-                    "", SellingType.SHOPEE, "WD-002", "Wardah Sunscreen", "Lophita", LocalDateTime.now());
-            transactionRepository.insert(transaction);
-
-            Stock stock = new Stock("WD-003", "Bedak Compact", LocalDateTime.now(),
-                    new BigDecimal("67000"), "", "https://shopee.co.id/","Lophita", LocalDateTime.now());
-            stockRepository.insert(stock);
-        };
-    }
+//    @Bean
+//    CommandLineRunner runner(ProductRepository productRepository, TransactionRepository transactionRepository, StockRepository stockRepository) {
+//        return args -> {
+//            System.out.println("RUNNING");
+//            Product product = new Product("Sunscreen Wardah", "WD-001", "spf30", Type.SKINCARE.name());
+//            productRepository.insert(product);
+//
+//            Transaction transaction = new Transaction(LocalDateTime.now(),LocalDateTime.now(), new BigDecimal("27000"),
+//                    "", SellingType.SHOPEE, "WD-002", "Wardah Sunscreen", "Lophita", LocalDateTime.now());
+//            transactionRepository.insert(transaction);
+//
+//            Stock stock = new Stock("WD-003", "Bedak Compact", LocalDateTime.now(),
+//                    new BigDecimal("67000"), "", "https://shopee.co.id/","Lophita", LocalDateTime.now());
+//            stockRepository.insert(stock);
+//        };
+//    }
 
 }

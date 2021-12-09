@@ -1,14 +1,10 @@
-package com.lophita.tobaskincare.persistence;
+package com.lophita.tobaskincare.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
-@Document
-public class Product {
-    @Id
+public class ProductDto {
     private String id;
     private String name;
     private String identifier;
@@ -17,7 +13,7 @@ public class Product {
 
     @JsonCreator
     @lombok.Builder(builderClassName = "Builder", toBuilder = true)
-    public Product(String id, String name, String identifier, String notes, String type) {
+    public ProductDto(String id, String name, String identifier, String notes, String type) {
         this.id = id;
         this.name = name;
         this.identifier = identifier;

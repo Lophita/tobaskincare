@@ -1,5 +1,6 @@
 package com.lophita.tobaskincare.persistence;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,20 +20,37 @@ public class Stock {
     private LocalDateTime stockUpdated;
     private BigDecimal price;
     private String notes;
-    private String urlNotes;
+    private String urlSeller;
     @CreatedBy
     private String username;
     @CreatedDate
     private LocalDateTime createdTime;
 
-    public Stock(String identifier, String name, LocalDateTime stockUpdated, BigDecimal price, String notes, String urlNotes, String username, LocalDateTime createdTime) {
+    @JsonCreator
+    @lombok.Builder(builderClassName = "Builder", toBuilder = true)
+    public Stock(String id, String identifier, String name, LocalDateTime stockUpdated, BigDecimal price, String notes, String urlSeller, String username, LocalDateTime createdTime) {
+        this.id = id;
         this.identifier = identifier;
         this.name = name;
         this.stockUpdated = stockUpdated;
         this.price = price;
         this.notes = notes;
-        this.urlNotes = urlNotes;
+        this.urlSeller = urlSeller;
         this.username = username;
         this.createdTime = createdTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "identifier='" + identifier + '\'' +
+                ", name='" + name + '\'' +
+                ", stockUpdated=" + stockUpdated +
+                ", price=" + price +
+                ", notes='" + notes + '\'' +
+                ", urlNotes='" + urlSeller + '\'' +
+                ", username='" + username + '\'' +
+                ", createdTime=" + createdTime +
+                '}';
     }
 }

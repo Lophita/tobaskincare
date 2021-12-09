@@ -1,5 +1,6 @@
 package com.lophita.tobaskincare.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -18,6 +19,8 @@ public class StockDto {
     private String username;
     private LocalDateTime createdTime;
 
+    @JsonCreator
+    @lombok.Builder(builderClassName = "Builder", toBuilder = true)
     public StockDto(String id, String identifier, String name, LocalDateTime stockUpdated, BigDecimal price, String notes, String urlSeller, String username, LocalDateTime createdTime) {
         this.id = id;
         this.identifier = identifier;
