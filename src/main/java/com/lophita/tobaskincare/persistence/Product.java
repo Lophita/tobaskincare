@@ -24,4 +24,15 @@ public class Product {
         this.notes = notes;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", identifier='" + identifier + '\'' +
+                ", notes='" + notes + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

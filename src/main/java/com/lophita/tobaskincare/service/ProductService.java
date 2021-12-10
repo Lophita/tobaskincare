@@ -8,5 +8,5 @@ public interface ProductService {
     List<Product> findAllProduct();
     Product save(Product product);
     Product update(Product product);
-    Product findProductById(Integer id);
+    Product findProductById(String id);
 }

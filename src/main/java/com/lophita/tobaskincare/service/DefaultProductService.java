@@ -29,7 +29,7 @@ public class DefaultProductService implements ProductService{
     }
 
     @Override
-    public Product findProductById(Integer id) {
-        return null;
+    public Product findProductById(String id) {
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
     }
 }
