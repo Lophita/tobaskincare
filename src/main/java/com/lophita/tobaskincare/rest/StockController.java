@@ -5,16 +5,12 @@ import com.lophita.tobaskincare.persistence.Stock;
 import com.lophita.tobaskincare.service.StockService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @Api(tags = "Stock")
@@ -42,5 +38,35 @@ public class StockController {
                             .build();
                 }).collect(Collectors.toList());
         return stockDtoList;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public StockDto addStock(@Valid @RequestBody StockDto stockDto) {
+        Stock stock = Stock.builder()
+                .id(stockDto.getId())
+                .identifier(stockDto.getIdentifier())
+                .name(stockDto.getName())
+                .stockUpdated(stockDto.getStockUpdated())
+                .price(stockDto.getPrice())
+                .notes(stockDto.getNotes())
+                .urlSeller(stockDto.getUrlSeller())
+                .username(stockDto.getUsername())
+                .createdTime(stockDto.getCreatedTime())
+                .build();
+        Stock result = stockService.save(stock);
+        StockDto resultDto = StockDto.builder()
+                .id(result.getId())
+                .identifier(result.getIdentifier())
+                .name(result.getName())
+                .stockUpdated(result.getStockUpdated())
+                .price(result.getPrice())
+                .notes(result.getNotes())
+                .urlSeller(result.getUrlSeller())
+                .username(result.getUsername())
+                .createdTime(result.getCreatedTime())
+                .build();
+        return resultDto;
     }
 }
