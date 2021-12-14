@@ -14,7 +14,7 @@ public class DefaultProductService implements ProductService{
     ProductRepository productRepository;
 
     @Override
-    public List<Product> findAllProduct() {
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
@@ -29,7 +29,7 @@ public class DefaultProductService implements ProductService{
     }
 
     @Override
-    public Product findProductById(String id) {
+    public Product findById(String id) {
         return productRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
     }
 }

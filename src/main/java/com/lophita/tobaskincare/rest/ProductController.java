@@ -18,7 +18,7 @@ public class ProductController {
 
     @GetMapping("/")
     public List<ProductDto> getAllProducts(){
-        List<Product> list = productService.findAllProduct();
+        List<Product> list = productService.findAll();
         List<ProductDto> productDtoList = list.stream()
                 .map(product -> ProductDto.builder()
                         .id(product.getId())

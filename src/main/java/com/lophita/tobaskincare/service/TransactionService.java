@@ -5,6 +5,6 @@ import com.lophita.tobaskincare.persistence.Transaction;
 import java.util.List;
 
 public interface TransactionService {
-    List<Transaction> findAllTransaction();
+    List<Transaction> findAll();
     Transaction save(Transaction transaction);
 }

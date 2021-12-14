@@ -1,14 +1,17 @@
 package com.lophita.tobaskincare.rest;
 
+import com.lophita.tobaskincare.dto.BaseResponse;
 import com.lophita.tobaskincare.dto.StockDto;
 import com.lophita.tobaskincare.persistence.Stock;
 import com.lophita.tobaskincare.service.StockService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +25,7 @@ public class StockController {
 
     @GetMapping("/")
     public List<StockDto> getAllStock() {
-        List<Stock> list = stockService.findAllStock();
+        List<Stock> list = stockService.findAll();
         List<StockDto> stockDtoList = list.stream()
                 .map(stock -> {
                     return StockDto.builder()
@@ -43,7 +46,7 @@ public class StockController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public StockDto addStock(@Valid @RequestBody StockDto stockDto) {
+    public BaseResponse<StockDto> addStock(@Valid @RequestBody StockDto stockDto) {
         Stock stock = Stock.builder()
                 .id(stockDto.getId())
                 .identifier(stockDto.getIdentifier())
@@ -55,18 +58,8 @@ public class StockController {
                 .username(stockDto.getUsername())
                 .createdTime(stockDto.getCreatedTime())
                 .build();
-        Stock result = stockService.save(stock);
-        StockDto resultDto = StockDto.builder()
-                .id(result.getId())
-                .identifier(result.getIdentifier())
-                .name(result.getName())
-                .stockUpdated(result.getStockUpdated())
-                .price(result.getPrice())
-                .notes(result.getNotes())
-                .urlSeller(result.getUrlSeller())
-                .username(result.getUsername())
-                .createdTime(result.getCreatedTime())
-                .build();
-        return resultDto;
+        StockDto result = stockService.save(stock);
+        BaseResponse<StockDto> baseResponse = new BaseResponse<>("SUCCESS", "Success", result, new ArrayList<>());
+        return baseResponse;
     }
 }

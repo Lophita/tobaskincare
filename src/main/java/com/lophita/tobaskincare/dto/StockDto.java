@@ -1,24 +1,23 @@
 package com.lophita.tobaskincare.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 public class StockDto {
 
     private String id;
     @NotBlank
     private String identifier;
-    @NotBlank
+    @NotBlank(message = "Name can not be empty")
     private String name;
-    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime stockUpdated;
     private BigDecimal price;
     private String notes;
@@ -26,7 +25,7 @@ public class StockDto {
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z\\s]*$")
     private String username;
-    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     @JsonCreator
@@ -41,20 +40,5 @@ public class StockDto {
         this.urlSeller = urlSeller;
         this.username = username;
         this.createdTime = createdTime;
-    }
-
-    @Override
-    public String toString() {
-        return "StockDto{" +
-                "id='" + id + '\'' +
-                ", identifier='" + identifier + '\'' +
-                ", name='" + name + '\'' +
-                ", stockUpdated=" + stockUpdated +
-                ", price=" + price +
-                ", notes='" + notes + '\'' +
-                ", urlSeller='" + urlSeller + '\'' +
-                ", username='" + username + '\'' +
-                ", createdTime=" + createdTime +
-                '}';
     }
 }

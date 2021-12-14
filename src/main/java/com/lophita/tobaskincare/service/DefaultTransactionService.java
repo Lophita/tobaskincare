@@ -14,7 +14,7 @@ public class DefaultTransactionService implements TransactionService{
     TransactionRepository transactionRepository;
 
     @Override
-    public List<Transaction> findAllTransaction() {
+    public List<Transaction> findAll() {
         return transactionRepository.findAll();
     }
 

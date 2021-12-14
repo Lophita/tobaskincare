@@ -20,7 +20,7 @@ public class TransactionController {
 
     @GetMapping("/")
     public List<TransactionDto> getAllTransaction() {
-        List<Transaction> list = transactionService.findAllTransaction();
+        List<Transaction> list = transactionService.findAll();
         List<TransactionDto> transactionDtoList =
                 list.stream().map(transaction -> {
                     return TransactionDto.builder()
