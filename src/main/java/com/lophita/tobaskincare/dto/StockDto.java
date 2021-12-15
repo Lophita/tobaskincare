@@ -2,6 +2,8 @@ package com.lophita.tobaskincare.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -13,11 +15,11 @@ import java.time.LocalDateTime;
 public class StockDto {
 
     private String id;
-    @NotBlank
+    @NotBlank(message = "Identifier can not be empty")
     private String identifier;
     @NotBlank(message = "Name can not be empty")
     private String name;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime stockUpdated;
     private BigDecimal price;
     private String notes;
@@ -25,7 +27,7 @@ public class StockDto {
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z\\s]*$")
     private String username;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     @JsonCreator
