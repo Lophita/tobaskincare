@@ -1,12 +1,18 @@
 package com.lophita.tobaskincare.rest;
 
+import com.lophita.tobaskincare.dto.BaseResponse;
 import com.lophita.tobaskincare.dto.ProductDto;
 import com.lophita.tobaskincare.persistence.Product;
 import com.lophita.tobaskincare.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,6 +35,22 @@ public class ProductController {
                         .build())
                 .collect(Collectors.toList());
         return productDtoList;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public BaseResponse<ProductDto> addProduct(@Valid @RequestBody ProductDto productDto){
+        Product product = Product.builder()
+                .id(productDto.getId())
+                .name(productDto.getName())
+                .identifier(productDto.getIdentifier())
+                .notes(productDto.getNotes())
+                .type(productDto.getType())
+                .build();
+        ProductDto result = productService.save(product);
+        BaseResponse<ProductDto> response = new BaseResponse<>("SUCCESS", "Success", result, null);
+        return response;
     }
 
 //    @GetMapping(value = "/{id}")

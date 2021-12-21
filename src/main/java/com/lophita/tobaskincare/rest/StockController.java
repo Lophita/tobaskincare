@@ -7,15 +7,10 @@ import com.lophita.tobaskincare.service.StockService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -62,20 +57,7 @@ public class StockController {
                 .createdTime(stockDto.getCreatedTime())
                 .build();
         StockDto result = stockService.save(stock);
-        BaseResponse<StockDto> baseResponse = new BaseResponse<>("SUCCESS", "Success", result, new ArrayList<>());
-        return baseResponse;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public BaseResponse<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException exception) {
-        Map<String, String> errors = new HashMap<>();
-        exception.getBindingResult().getAllErrors().forEach((objectError -> {
-            String fieldName = ((FieldError) objectError).getField();
-            String errorMessage = objectError.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        }));
-        BaseResponse<Map<String, String>> baseResponse = new BaseResponse<Map<String, String>>("FAILED", "failed", errors, new ArrayList<>());
+        BaseResponse<StockDto> baseResponse = new BaseResponse<>("SUCCESS", "Success", result, null);
         return baseResponse;
     }
 }
