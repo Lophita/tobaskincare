@@ -25,7 +25,7 @@ public class DefaultProductService implements ProductService{
         ProductDto productDto = ProductDto.builder()
                 .id(result.getId())
                 .notes(result.getNotes())
-                .type(result.getNotes())
+                .type(result.getType())
                 .identifier(result.getIdentifier())
                 .name(result.getName())
                 .build();

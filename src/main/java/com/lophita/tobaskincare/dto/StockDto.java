@@ -2,12 +2,9 @@ package com.lophita.tobaskincare.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -21,11 +18,12 @@ public class StockDto {
     private String name;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime stockUpdated;
+    @NotNull(message = "Price can not be null")
     private BigDecimal price;
     private String notes;
     private String urlSeller;
-    @NotBlank
-    @Pattern(regexp = "^[a-zA-Z\\s]*$")
+    @NotBlank(message = "Username can not be empty")
+    @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "Username must be alphabetic")
     private String username;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;

@@ -1,6 +1,7 @@
 package com.lophita.tobaskincare.persistence;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
@@ -19,6 +20,7 @@ public class Stock {
     private String id;
     private String identifier;
     private String name;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime stockUpdated;
     private BigDecimal price;
     private String notes;
@@ -26,6 +28,7 @@ public class Stock {
     @CreatedBy
     private String username;
     @CreatedDate
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     @JsonCreator
