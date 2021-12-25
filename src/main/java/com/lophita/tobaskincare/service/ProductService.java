@@ -1,12 +1,13 @@
 package com.lophita.tobaskincare.service;
 
+import com.lophita.tobaskincare.dto.ProductDto;
 import com.lophita.tobaskincare.persistence.Product;
 
 import java.util.List;
 
 public interface ProductService {
-    List<Product> findAllProduct();
-    Product save(Product product);
+    List<ProductDto> findAll();
+    ProductDto save(Product product);
     Product update(Product product);
-    Product findProductById(Integer id);
+    ProductDto findById(String id);
 }

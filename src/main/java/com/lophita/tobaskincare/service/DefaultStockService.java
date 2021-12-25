@@ -1,5 +1,6 @@
 package com.lophita.tobaskincare.service;
 
+import com.lophita.tobaskincare.dto.StockDto;
 import com.lophita.tobaskincare.persistence.Stock;
 import com.lophita.tobaskincare.persistence.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,25 @@ public class DefaultStockService implements StockService{
     StockRepository stockRepository;
 
     @Override
-    public List<Stock> findAllStock() {
+    public List<Stock> findAll() {
         return stockRepository.findAll();
     }
 
     @Override
-    public Stock save(Stock stock) {
-        return stockRepository.insert(stock);
+    public StockDto save(Stock stock) {
+        Stock result = stockRepository.insert(stock);
+        StockDto resultDto = StockDto.builder()
+                .id(result.getId())
+                .identifier(result.getIdentifier())
+                .name(result.getName())
+                .stockUpdated(result.getStockUpdated())
+                .price(result.getPrice())
+                .notes(result.getNotes())
+                .urlSeller(result.getUrlSeller())
+                .username(result.getUsername())
+                .createdTime(result.getCreatedTime())
+                .build();
+        return resultDto;
     }
 
     @Override
@@ -29,7 +42,7 @@ public class DefaultStockService implements StockService{
     }
 
     @Override
-    public Stock findStockById(Integer id) {
+    public Stock findById(Integer id) {
         return null;
     }
 }

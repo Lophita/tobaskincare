@@ -2,11 +2,13 @@ package com.lophita.tobaskincare.persistence;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Document
+@ToString
 public class Product {
     @Id
     private String id;

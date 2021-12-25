@@ -1,14 +1,19 @@
 package com.lophita.tobaskincare.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+import javax.validation.constraints.NotBlank;
+
+@Data
 public class ProductDto {
     private String id;
+    @NotBlank(message = "Name can not be empty")
     private String name;
+    @NotBlank(message = "Identifier can not be empty")
     private String identifier;
     private String notes;
+    @NotBlank(message = "Type can not be empty")
     private String type;
 
     @JsonCreator

@@ -1,22 +1,31 @@
 package com.lophita.tobaskincare.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 public class StockDto {
 
     private String id;
+    @NotBlank(message = "Identifier can not be empty")
     private String identifier;
+    @NotBlank(message = "Name can not be empty")
     private String name;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime stockUpdated;
+    @NotNull(message = "Price can not be null")
     private BigDecimal price;
     private String notes;
     private String urlSeller;
+    @NotBlank(message = "Username can not be empty")
+    @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "Username must be alphabetic")
     private String username;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     @JsonCreator
