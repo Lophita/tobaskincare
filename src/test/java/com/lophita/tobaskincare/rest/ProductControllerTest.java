@@ -6,10 +6,7 @@ import com.lophita.tobaskincare.dto.ProductDto;
 import com.lophita.tobaskincare.persistence.Product;
 import com.lophita.tobaskincare.persistence.Type;
 import com.lophita.tobaskincare.service.DefaultProductService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
@@ -23,7 +20,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @DisplayName("Product Controller Test")
@@ -42,6 +41,7 @@ public class ProductControllerTest {
     ArgumentCaptor<Product> productCaptor;
 
     private ProductDto productDto;
+    private List<ProductDto> productDtoList = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
@@ -52,6 +52,21 @@ public class ProductControllerTest {
                 .type(Type.MAKEUP.toString())
                 .notes("lipstik matte tahan 16 jam")
                 .build();
+
+        productDtoList.add(ProductDto.builder()
+                .id("1")
+                .identifier("SKU-120-001")
+                .name("Compact Powder Whitening")
+                .type(Type.MAKEUP.toString())
+                .notes("expired 31 dec 2025")
+                .build());
+        productDtoList.add(ProductDto.builder()
+                .id("2")
+                .identifier("SKU-120-002")
+                .name("Scarlett Whitening")
+                .type(Type.SKINCARE.toString())
+                .notes("expired 31 dec 2024")
+                .build());
     }
 
     @Test
@@ -123,5 +138,43 @@ public class ProductControllerTest {
         // cara ke-2:
         BaseResponse actualResult = objectMapper.readValue(actualResponseBody, BaseResponse.class);
         Assertions.assertTrue(new ReflectionEquals(expectedResponse).matches(actualResult));
+    }
+
+    @Test
+    @DisplayName("Get All Products then Return All Products")
+    public void getAllProductsThenReturnAllProducts() throws Exception {
+        Mockito.when(productService.findAll()).thenReturn(productDtoList);
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/product"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        Mockito.verify(productService, Mockito.times(1)).findAll();
+
+        BaseResponse<List<ProductDto>> expectedResponse = new BaseResponse<>("SUCCESS", "Success", productDtoList, null);
+        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+
+        Assertions.assertEquals(objectMapper.writeValueAsString(expectedResponse), actualResponseBody);
+    }
+
+    @Disabled
+    @Test
+    @DisplayName("Get Product By Id when Valid then Return Product")
+    public void getProductByIdThenReturnProduct() throws Exception {
+        Mockito.when(productService.findById(productDto.getId())).thenReturn(productDto);
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/product/" + productDto.getId())).andReturn();
+
+        ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+        Mockito.verify(productService, Mockito.times(1)).findById(stringCaptor.capture());
+
+        BaseResponse<ProductDto> expectedResponse = new BaseResponse<>("SUCCESS", "Success", productDto, null);
+        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+        Assertions.assertEquals(objectMapper.writeValueAsString(expectedResponse), actualResponseBody);
+    }
+
+    @Disabled
+    @Test
+    @DisplayName("Get Product By Id when Invalid then Return Product Not Found")
+    public void getProductByIdButProductNotFound() throws Exception {
+
     }
 }

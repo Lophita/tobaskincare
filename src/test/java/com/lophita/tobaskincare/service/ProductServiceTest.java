@@ -13,6 +13,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @DisplayName("Product Service Test")
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
@@ -45,6 +49,48 @@ public class ProductServiceTest {
         Mockito.verify(productRepository, Mockito.times(1)).insert(product);
         Assertions.assertEquals(productDto, result);
         Assertions.assertEquals(productDto.hashCode(), result.hashCode());
+    }
+
+    @Test
+    @DisplayName("Should Return All Products")
+    public void shouldReturnAllProducts(){
+        List<Product> products = new ArrayList<>();
+        products.add(Product.builder()
+                .id("1")
+                .identifier("SKU-120-001")
+                .name("Compact Powder Whitening")
+                .type(Type.MAKEUP.toString())
+                .notes("expired 31 dec 2025")
+                .build());
+        products.add(Product.builder()
+                .id("2")
+                .identifier("SKU-120-002")
+                .name("Scarlett Whitening")
+                .type(Type.SKINCARE.toString())
+                .notes("expired 31 dec 2024")
+                .build());
+
+        List<ProductDto> productDtoList = products.stream()
+                .map(product -> ProductDto.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .identifier(product.getIdentifier())
+                        .type(product.getType())
+                        .notes(product.getNotes())
+                        .build())
+                .collect(Collectors.toList());
+
+        Mockito.when(productRepository.findAll()).thenReturn(products);
+        List<ProductDto> result = productService.findAll();
+        Mockito.verify(productRepository, Mockito.times(1)).findAll();
+        Assertions.assertEquals(productDtoList, result);
+        Assertions.assertEquals(productDtoList.hashCode(), result.hashCode());
+    }
+
+    @Test
+    @DisplayName("Given Valid Id should Return Product")
+    public void givenIdShouldReturnProduct() throws Exception {
+
     }
 
 }

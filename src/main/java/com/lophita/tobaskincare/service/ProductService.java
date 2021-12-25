@@ -6,8 +6,8 @@ import com.lophita.tobaskincare.persistence.Product;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> findAll();
+    List<ProductDto> findAll();
     ProductDto save(Product product);
     Product update(Product product);
-    Product findById(String id);
+    ProductDto findById(String id);
 }

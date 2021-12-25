@@ -21,7 +21,7 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<StockDto> getAllStock() {
         List<Stock> list = stockService.findAll();
         List<StockDto> stockDtoList = list.stream()

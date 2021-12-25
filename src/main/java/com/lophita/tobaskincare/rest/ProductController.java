@@ -9,11 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
@@ -22,19 +18,11 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/")
-    public List<ProductDto> getAllProducts(){
-        List<Product> list = productService.findAll();
-        List<ProductDto> productDtoList = list.stream()
-                .map(product -> ProductDto.builder()
-                        .id(product.getId())
-                        .name(product.getName())
-                        .identifier(product.getIdentifier())
-                        .type(product.getType())
-                        .notes(product.getNotes())
-                        .build())
-                .collect(Collectors.toList());
-        return productDtoList;
+    @GetMapping
+    public BaseResponse<List<ProductDto>> getAllProducts(){
+        List<ProductDto> result = productService.findAll();
+        BaseResponse<List<ProductDto>> response = new BaseResponse<>("SUCCESS", "Success", result, null);
+        return response;
     }
 
     @PostMapping
@@ -53,17 +41,10 @@ public class ProductController {
         return response;
     }
 
-//    @GetMapping(value = "/{id}")
-//    public ProductDto getProduct(@PathVariable String id){
-//        Product product = productService.findProductById(id);
-//        System.out.println(product.toString());
-//        ProductDto productDto = ProductDto.builder()
-//                .id(product.getId())
-//                .name(product.getName())
-//                .identifier(product.getIdentifier())
-//                .type(product.getType())
-//                .notes(product.getNotes())
-//                .build();
-//        return productDto;
-//    }
+    @GetMapping(value = "/{id}")
+    public BaseResponse<ProductDto> getProduct(@PathVariable String id){
+        ProductDto result = productService.findById(id);
+        BaseResponse<ProductDto> response = new BaseResponse<>("SUCCESS", "Success", result, null);
+        return response;
+    }
 }
